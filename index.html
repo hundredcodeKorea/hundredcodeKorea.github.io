@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hundred Code Korea</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .apps {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .app-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .app-icon {
+            font-size: 2.5em;
+        }
+        .app-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .app-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        .links a:hover {
+            background: #667eea;
+            color: white;
+        }
+        footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Hundred Code Korea</h1>
+        <p class="subtitle">100일의 도전으로 삶을 바꾸는 앱</p>
+
+        <div class="apps">
+            <div class="app-card">
+                <span class="app-icon">🏠</span>
+                <div class="app-info">
+                    <h3>월세장부</h3>
+                    <p>집주인을 위한 가장 쉬운 월세 관리 앱</p>
+                </div>
+            </div>
+            <div class="app-card">
+                <span class="app-icon">🌙</span>
+                <div class="app-info">
+                    <h3>드림플로우</h3>
+                    <p>AI 기반 루시드 드림 트레이닝</p>
+                </div>
+            </div>
+            <div class="app-card">
+                <span class="app-icon">💪</span>
+                <div class="app-info">
+                    <h3>Mission 100</h3>
+                    <p>100일 운동 챌린지 시리즈</p>
+                </div>
+            </div>
+            <div class="app-card">
+                <span class="app-icon">📚</span>
+                <div class="app-info">
+                    <h3>신간요정</h3>
+                    <p>만화/라노벨 신간 알림</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="links">
+            <a href="privacy-policy.html">개인정보처리방침</a>
+            <a href="terms.html">이용약관</a>
+        </div>
+
+        <footer>
+            © 2025 Hundred Code Korea. All rights reserved.
+        </footer>
+    </div>
+</body>
+</html>
