@@ -19,7 +19,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             text-align: center;
@@ -48,6 +48,8 @@
             align-items: center;
             gap: 15px;
             transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
         }
         .app-card:hover {
             transform: translateY(-2px);
@@ -64,11 +66,38 @@
             color: #666;
             font-size: 0.9em;
         }
+        .app-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .app-links a {
+            font-size: 0.75em;
+            color: #667eea;
+            text-decoration: none;
+            padding: 4px 10px;
+            border: 1px solid #667eea;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .app-links a:hover {
+            background: #667eea;
+            color: white;
+        }
+        .section-title {
+            font-size: 1.2em;
+            color: #333;
+            margin: 30px 0 15px 0;
+            text-align: left;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+        }
         .links {
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-top: 30px;
         }
         .links a {
             color: #667eea;
@@ -92,46 +121,104 @@
 <body>
     <div class="container">
         <h1>🚀 Hundred Code Korea</h1>
-        <p class="subtitle">100일의 도전으로 삶을 바꾸는 앱</p>
+        <p class="subtitle">일상을 더 스마트하게 만드는 앱</p>
 
+        <h2 class="section-title">생산성</h2>
+        <div class="apps">
+            <div class="app-card">
+                <span class="app-icon">💰</span>
+                <div class="app-info">
+                    <h3>RealPay 시급지킴이</h3>
+                    <p>프리랜서·알바생을 위한 실시간 시급 계산</p>
+                    <div class="app-links">
+                        <a href="realpay/terms.html">이용약관</a>
+                        <a href="realpay/privacy.html">개인정보처리방침</a>
+                    </div>
+                </div>
+            </div>
+            <div class="app-card">
+                <span class="app-icon">💊</span>
+                <div class="app-info">
+                    <h3>필타임</h3>
+                    <p>스마트한 복약 알림 관리</p>
+                    <div class="app-links">
+                        <a href="pill-time/terms.html">이용약관</a>
+                        <a href="pill-time/privacy.html">개인정보처리방침</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">부동산 관리</h2>
         <div class="apps">
             <div class="app-card">
                 <span class="app-icon">🏠</span>
                 <div class="app-info">
                     <h3>월세장부</h3>
-                    <p>집주인을 위한 가장 쉬운 월세 관리 앱</p>
+                    <p>집주인을 위한 가장 쉬운 월세 관리</p>
+                    <div class="app-links">
+                        <a href="wolse-ledger/terms.html">이용약관</a>
+                        <a href="wolse-ledger/privacy.html">개인정보처리방침</a>
+                    </div>
                 </div>
             </div>
             <div class="app-card">
-                <span class="app-icon">🌙</span>
+                <span class="app-icon">🏢</span>
                 <div class="app-info">
-                    <h3>드림플로우</h3>
-                    <p>AI 기반 루시드 드림 트레이닝</p>
+                    <h3>전세장부</h3>
+                    <p>전세 계약 및 보증금 관리</p>
+                    <div class="app-links">
+                        <a href="jeonse-ledger/terms.html">이용약관</a>
+                        <a href="jeonse-ledger/privacy.html">개인정보처리방침</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">라이프스타일</h2>
+        <div class="apps">
+            <div class="app-card">
+                <span class="app-icon">🌱</span>
+                <div class="app-info">
+                    <h3>Plip 플립</h3>
+                    <p>AI 식물 케어 도우미</p>
+                    <div class="app-links">
+                        <a href="plip/terms.html">이용약관</a>
+                        <a href="plip/privacy.html">개인정보처리방침</a>
+                    </div>
                 </div>
             </div>
             <div class="app-card">
-                <span class="app-icon">💪</span>
+                <span class="app-icon">🐾</span>
                 <div class="app-info">
-                    <h3>Mission 100</h3>
-                    <p>100일 운동 챌린지 시리즈</p>
+                    <h3>펫머니</h3>
+                    <p>반려동물 지출 관리</p>
+                    <div class="app-links">
+                        <a href="pet-money/terms.html">이용약관</a>
+                        <a href="pet-money/privacy.html">개인정보처리방침</a>
+                    </div>
                 </div>
             </div>
             <div class="app-card">
-                <span class="app-icon">📚</span>
+                <span class="app-icon">🍻</span>
                 <div class="app-info">
-                    <h3>신간요정</h3>
-                    <p>만화/라노벨 신간 알림</p>
+                    <h3>술래</h3>
+                    <p>술자리 게임 모음</p>
+                    <div class="app-links">
+                        <a href="sullae/terms.html">이용약관</a>
+                        <a href="sullae/privacy.html">개인정보처리방침</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="links">
-            <a href="privacy-policy.html">개인정보처리방침</a>
-            <a href="terms.html">이용약관</a>
+            <a href="mailto:osu355@gmail.com">📧 문의하기</a>
+            <a href="https://github.com/hundredcodeKorea">GitHub</a>
         </div>
 
         <footer>
-            © 2025 Hundred Code Korea. All rights reserved.
+            © 2026 Hundred Code Korea. All rights reserved.
         </footer>
     </div>
 </body>
