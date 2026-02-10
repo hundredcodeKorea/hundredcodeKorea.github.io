@@ -894,7 +894,7 @@
 
     <footer>
         <div class="footer-links">
-            <a href="mailto:hundredcore.korea@gmail.com">📧 문의하기</a>
+            <a href="mailto:osu355@gmail.com">📧 문의하기</a>
             <a href="https://github.com/hundredcoreKorea" target="_blank">🐙 GitHub</a>
             <a href="privacy-policy.html">개인정보처리방침</a>
             <a href="terms.html">이용약관</a>
@@ -1167,6 +1167,161 @@
 
         document.getElementById('imageViewer').addEventListener('click', function(e) {
             if (e.target === this) closeImageViewer();
+        });
+    </script>
+
+    <!-- 채팅 문의 버블 -->
+    <style>
+        .chat-bubble {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            z-index: 900;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .chat-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6);
+        }
+        .chat-panel {
+            position: fixed;
+            bottom: 100px;
+            right: 28px;
+            width: 340px;
+            max-height: 480px;
+            background: #1a1a2e;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            z-index: 900;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+        .chat-panel.active { display: flex; }
+        .chat-panel-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        .chat-panel-header h4 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .chat-panel-header p {
+            font-size: 0.8rem;
+            opacity: 0.85;
+        }
+        .chat-panel-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-panel-body input,
+        .chat-panel-body textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: none;
+        }
+        .chat-panel-body input::placeholder,
+        .chat-panel-body textarea::placeholder {
+            color: var(--text-muted);
+        }
+        .chat-panel-body input:focus,
+        .chat-panel-body textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .chat-send-btn {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .chat-send-btn:hover { opacity: 0.9; }
+        .chat-sent-msg {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 40px 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .chat-panel { width: calc(100% - 32px); right: 16px; bottom: 96px; }
+            .chat-bubble { bottom: 20px; right: 20px; width: 54px; height: 54px; font-size: 1.4rem; }
+        }
+    </style>
+
+    <button class="chat-bubble" onclick="toggleChat()" id="chatBubble">💬</button>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-panel-header">
+            <h4>문의하기</h4>
+            <p>궁금한 점이 있으시면 편하게 남겨주세요</p>
+        </div>
+        <div class="chat-panel-body" id="chatBody">
+            <input type="text" id="chatName" placeholder="이름 (선택)">
+            <input type="email" id="chatEmail" placeholder="답변 받을 이메일">
+            <textarea id="chatMsg" rows="4" placeholder="문의 내용을 입력해주세요"></textarea>
+            <button class="chat-send-btn" onclick="sendChat()">보내기</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleChat() {
+            const panel = document.getElementById('chatPanel');
+            panel.classList.toggle('active');
+        }
+
+        function sendChat() {
+            const email = document.getElementById('chatEmail').value.trim();
+            const msg = document.getElementById('chatMsg').value.trim();
+            const name = document.getElementById('chatName').value.trim();
+            if (!msg) { alert('문의 내용을 입력해주세요.'); return; }
+
+            const subject = encodeURIComponent('[Hundred Core Korea 문의] ' + (name || '고객') + '님의 문의');
+            const body = encodeURIComponent(
+                '보낸 사람: ' + (name || '미입력') + '\n' +
+                '이메일: ' + (email || '미입력') + '\n\n' +
+                msg
+            );
+            window.open('mailto:osu355@gmail.com?subject=' + subject + '&body=' + body);
+
+            document.getElementById('chatBody').innerHTML =
+                '<div class="chat-sent-msg">✅ 메일 앱이 열렸습니다.<br>전송해주시면 빠르게 답변드리겠습니다!</div>';
+        }
+
+        // 채팅 패널 외부 클릭 시 닫기
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('chatPanel');
+            const bubble = document.getElementById('chatBubble');
+            if (panel.classList.contains('active') &&
+                !panel.contains(e.target) && e.target !== bubble) {
+                panel.classList.remove('active');
+            }
         });
     </script>
 </body>
