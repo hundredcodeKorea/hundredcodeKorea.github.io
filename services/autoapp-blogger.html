@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoApp-Blogger - AI 블로그 마케팅 자동화 | Hundred Core Korea</title>
+    <meta name="description" content="네이버, 티스토리, 구글 블로거에 AI가 매일 자동으로 홍보 글을 발행하는 마케팅 자동화 시스템. 7개 앱 운영 개발자가 직접 검증한 실전 솔루션.">
+    <meta name="keywords" content="블로그 자동화, AI 마케팅, 네이버 블로그, 티스토리, 앱 마케팅, 블로그 마케팅, n8n, 자동 포스팅">
+    <meta property="og:title" content="AutoApp-Blogger - AI 블로그 마케팅 자동화">
+    <meta property="og:description" content="잠자는 동안 내 앱을 홍보하는 AI 마케터. 7개 앱 운영 개발자가 직접 검증한 실전 자동화 시스템.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root{--primary:#6366f1;--primary-dark:#4f46e5;--secondary:#8b5cf6;--accent:#ec4899;--bg-dark:#0f0f23;--bg-card:rgba(255,255,255,0.03);--text-primary:#fff;--text-secondary:rgba(255,255,255,0.7);--text-muted:rgba(255,255,255,0.5);--border:rgba(255,255,255,0.1);--glow:rgba(99,102,241,0.3);--green:#10b981}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-dark);color:var(--text-primary);min-height:100vh;overflow-x:hidden;line-height:1.7}
+        .bg-gradient{position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 20%,rgba(99,102,241,0.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(139,92,246,0.15) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(236,72,153,0.08) 0%,transparent 60%);z-index:-1}
+        .stars{position:fixed;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(2px 2px at 20px 30px,rgba(255,255,255,0.3),transparent),radial-gradient(2px 2px at 40px 70px,rgba(255,255,255,0.2),transparent),radial-gradient(1px 1px at 90px 40px,rgba(255,255,255,0.4),transparent),radial-gradient(2px 2px at 160px 120px,rgba(255,255,255,0.3),transparent);background-size:250px 250px;animation:twinkle 8s ease-in-out infinite;z-index:-1}
+        @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.5}}
+        .container{max-width:900px;margin:0 auto;padding:40px 24px}
+        .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;margin-bottom:40px;border-bottom:1px solid var(--border)}
+        .nav a{color:var(--text-secondary);text-decoration:none;font-size:.9rem;transition:color .2s}
+        .nav a:hover{color:var(--primary)}
+        .nav .brand{font-weight:700;color:var(--text-primary);font-size:1rem}
+        .hero{text-align:center;padding:60px 0 40px}
+        .hero-badge{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:6px 20px;border-radius:50px;font-size:.85rem;font-weight:600;margin-bottom:24px}
+        .hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;line-height:1.3;margin-bottom:16px;background:linear-gradient(135deg,#fff 0%,#c7d2fe 50%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--text-secondary);max-width:600px;margin:0 auto 32px}
+        .hero-tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .hero-tag{background:var(--bg-card);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-size:.85rem;color:var(--text-secondary)}
+        .section{margin-bottom:60px}
+        .section-title{font-size:1.5rem;font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+        .section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+        .card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;transition:all .3s}
+        .card:hover{border-color:rgba(99,102,241,0.3);box-shadow:0 8px 32px rgba(99,102,241,0.1)}
+        .target-list{list-style:none}
+        .target-list li{padding:12px 0;border-bottom:1px solid var(--border);color:var(--text-secondary);font-size:.95rem;display:flex;align-items:flex-start;gap:12px}
+        .target-list li:last-child{border-bottom:none}
+        .target-list .icon{font-size:1.2rem;flex-shrink:0}
+        .pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+        .pipeline-step{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 16px;text-align:center}
+        .pipeline-step .step-num{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;line-height:32px;font-size:.85rem;font-weight:700;margin-bottom:12px}
+        .pipeline-step h4{font-size:.95rem;margin-bottom:8px}
+        .pipeline-step p{font-size:.8rem;color:var(--text-muted)}
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+        .feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .feature-card .feature-icon{font-size:2rem;margin-bottom:12px}
+        .feature-card h4{font-size:1rem;margin-bottom:8px}
+        .feature-card p{font-size:.85rem;color:var(--text-secondary);line-height:1.6}
+        .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+        .pricing-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:all .3s}
+        .pricing-card.featured{border-color:var(--primary);box-shadow:0 0 30px rgba(99,102,241,0.15);position:relative}
+        .pricing-card.featured::before{content:'추천';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:4px 16px;border-radius:20px;font-size:.8rem;font-weight:600}
+        .pricing-card h3{font-size:1.1rem;margin-bottom:4px}
+        .pricing-card .plan-desc{font-size:.85rem;color:var(--text-muted);margin-bottom:16px}
+        .pricing-card .price{font-size:2rem;font-weight:800;margin-bottom:4px;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .pricing-card .price-unit{font-size:.85rem;color:var(--text-muted);margin-bottom:20px}
+        .pricing-card ul{list-style:none;text-align:left;margin-bottom:24px}
+        .pricing-card ul li{padding:6px 0;font-size:.85rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px}
+        .pricing-card ul li::before{content:'✓';color:var(--green);font-weight:700}
+        .faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+        .faq-item:last-child{border-bottom:none}
+        .faq-q{font-weight:600;font-size:.95rem;margin-bottom:8px;color:var(--text-primary);display:flex;align-items:center;gap:8px}
+        .faq-a{font-size:.9rem;color:var(--text-secondary);line-height:1.7;padding-left:28px}
+        .cta-section{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(139,92,246,0.1));border:1px solid var(--border);border-radius:20px;margin-bottom:60px}
+        .cta-section h2{font-size:1.5rem;margin-bottom:12px}
+        .cta-section p{color:var(--text-secondary);margin-bottom:24px}
+        .cta-btn{display:inline-block;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:600;font-size:1rem;transition:all .3s}
+        .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,0.3)}
+        .checklist{list-style:none}
+        .checklist li{padding:8px 0;font-size:.9rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:10px}
+        .checklist li::before{content:'☑';color:var(--primary);flex-shrink:0}
+        footer{text-align:center;padding:40px 0;border-top:1px solid var(--border)}
+        .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px}
+        .footer-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+        .footer-links a:hover{color:var(--primary)}
+        .copyright{color:var(--text-muted);font-size:.8rem}
+        @media(max-width:768px){.container{padding:20px 16px}.hero{padding:40px 0 20px}.pipeline{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="stars"></div>
+    <div class="container">
+        <nav class="nav">
+            <a href="../index.html" class="brand">Hundred Core Korea</a>
+            <a href="mailto:osu355@gmail.com">문의하기</a>
+        </nav>
+        <section class="hero">
+            <span class="hero-badge">AutoApp-Blogger</span>
+            <h1>잠자는 동안<br>내 앱을 홍보하는 AI 마케터</h1>
+            <p>7개 앱 운영 개발자가 직접 검증한 블로그 마케팅 자동화 시스템.<br>네이버, 티스토리, 구글 블로거에 AI가 매일 글을 쓰고 발행합니다.</p>
+            <div class="hero-tags">
+                <span class="hero-tag">월 유지비 1~2만원</span>
+                <span class="hero-tag">페르소나 기반 글 생성</span>
+                <span class="hero-tag">SEO 최적화</span>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">이런 분들께 추천합니다</h2>
+            <div class="card">
+                <ul class="target-list">
+                    <li><span class="icon">💻</span>앱이나 서비스를 출시했는데 홍보할 시간이 없는 1인 개발자</li>
+                    <li><span class="icon">💰</span>매달 수백만 원 나가는 마케팅 대행사 비용이 부담스러운 초기 창업자</li>
+                    <li><span class="icon">📝</span>네이버, 티스토리, 블로거를 동시에 운영하고 싶지만 글 쓸 여력이 없는 분</li>
+                    <li><span class="icon">⏰</span>블로그 마케팅의 중요성은 알지만 매번 미루고 있는 분</li>
+                </ul>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">자동화 파이프라인</h2>
+            <div class="pipeline">
+                <div class="pipeline-step"><span class="step-num">1</span><h4>앱 정보 세팅</h4><p>앱 컨셉 및 타겟 키워드 입력</p></div>
+                <div class="pipeline-step"><span class="step-num">2</span><h4>페르소나 AI 글 생성</h4><p>OpenRouter API 기반 고품질 글 작성</p></div>
+                <div class="pipeline-step"><span class="step-num">3</span><h4>브라우저 기반 발행</h4><p>사람이 쓰는 것과 동일한 프로세스</p></div>
+                <div class="pipeline-step"><span class="step-num">4</span><h4>3대 플랫폼 동시 확산</h4><p>네이버 / 티스토리 / 구글 블로거</p></div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">왜 저에게 맡기셔야 하나요?</h2>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon">🛡️</div><h4>검증된 솔루션</h4><p>직접 7개 앱을 Play 스토어에서 운영하며 사용 중. 매주 실제 발행되며 효과 검증 완료.</p></div>
+                <div class="feature-card"><div class="feature-icon">🎭</div><h4>AI 티 안 나는 페르소나</h4><p>단순 정보 나열이 아닌, 1인칭 경험담 형식. 앱 컨셉에 맞춘 맞춤형 인격 부여.</p></div>
+                <div class="feature-card"><div class="feature-icon">💡</div><h4>압도적 가성비</h4><p>대행사 비용 대비 95% 이상 절감. 사용한 만큼만 내는 합리적 API 비용 (월 1~2만 원).</p></div>
+                <div class="feature-card"><div class="feature-icon">🎯</div><h4>플랫폼별 맞춤 최적화</h4><p>네이버: 가독성, 이모지, 해요체. 티스토리: 구글 SEO, H태그 구조화.</p></div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">가격 안내</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>STANDARD</h3>
+                    <p class="plan-desc">1채널 기본 세팅</p>
+                    <div class="price">29만원</div>
+                    <div class="price-unit">1회 구축비</div>
+                    <ul>
+                        <li>블로그 1개 채널 구축</li>
+                        <li>AI 글 생성 워크플로우</li>
+                        <li>운영 가이드 제공</li>
+                        <li>작업 기간: 3일</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>DELUXE</h3>
+                    <p class="plan-desc">2채널 풀 세팅</p>
+                    <div class="price">39만원</div>
+                    <div class="price-unit">1회 구축비</div>
+                    <ul>
+                        <li>블로그 2개 채널 구축</li>
+                        <li>페르소나 커스터마이징</li>
+                        <li>1주일 사후 지원</li>
+                        <li>작업 기간: 5일</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3>PREMIUM</h3>
+                    <p class="plan-desc">3채널 + 1개월 관리</p>
+                    <div class="price">59만원</div>
+                    <div class="price-unit">1회 구축비</div>
+                    <ul>
+                        <li>블로그 3개 채널 구축</li>
+                        <li>1개월 모니터링/유지보수</li>
+                        <li>페르소나 커스터마이징</li>
+                        <li>작업 기간: 7일</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">서비스 진행 절차</h2>
+            <div class="card">
+                <div class="pipeline" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+                    <div class="pipeline-step"><span class="step-num">1</span><h4>상담</h4><p>앱/서비스 정보 파악, 채널 및 톤앤매너 협의</p></div>
+                    <div class="pipeline-step"><span class="step-num">2</span><h4>세팅</h4><p>원격 접속으로 설치 및 연동 (약 2~3시간)</p></div>
+                    <div class="pipeline-step"><span class="step-num">3</span><h4>테스트</h4><p>실제 발행 테스트 진행 및 결과 확인</p></div>
+                    <div class="pipeline-step"><span class="step-num">4</span><h4>인수</h4><p>운영 가이드 전달 및 1주일 사후 지원</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">자주 묻는 질문</h2>
+            <div class="card">
+                <div class="faq-item"><div class="faq-q">💬 블로그 저품질에 걸리지 않나요?</div><div class="faq-a">AI가 생성하는 글은 단순 키워드 반복이 아닌, 실제 사용 경험 기반의 정보성 콘텐츠입니다. 발행 빈도도 하루 1~2건 수준으로 설정하며, 스팸성 대량 발행과는 다릅니다.</div></div>
+                <div class="faq-item"><div class="faq-q">💬 AI가 쓴 티가 나지 않나요?</div><div class="faq-a">앱 컨셉에 맞는 페르소나를 설정하고, 1인칭 경험담 형식으로 생성합니다. 플랫폼별로 문체도 다르게 적용하여 완성도 높은 글이 나옵니다.</div></div>
+                <div class="faq-item"><div class="faq-q">💬 컴퓨터를 항상 켜놔야 하나요?</div><div class="faq-a">본인 PC에 설치하는 경우, 발행 시간에는 PC가 켜져 있어야 합니다. 24시간 운영을 원하시면 VPS(가상 서버) 세팅을 도와드립니다 (월 1만원~ 수준).</div></div>
+                <div class="faq-item"><div class="faq-q">💬 블로그 계정이 정지될 위험은 없나요?</div><div class="faq-a">실제 브라우저를 통한 정상적인 글쓰기 프로세스와 동일하게 동작합니다. 다만 플랫폼 정책 변경에 따른 리스크는 존재하며, 이에 대한 대응 가이드를 함께 제공합니다.</div></div>
+                <div class="faq-item"><div class="faq-q">💬 API 비용은 얼마나 드나요?</div><div class="faq-a">OpenRouter를 통해 AI 모델을 사용하며, 하루 3건 발행 기준 월 1~2만원 수준입니다. 사용한 만큼만 과금되어 고정비 부담이 없습니다.</div></div>
+                <div class="faq-item"><div class="faq-q">💬 세팅 후 혼자서도 관리할 수 있나요?</div><div class="faq-a">네. 운영 가이드를 제공하며, 일상적인 관리는 월 1시간 이내입니다. Chrome 업데이트 등 간헐적 조치가 필요할 때를 위한 가이드도 포함됩니다.</div></div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title">구매 전 확인사항</h2>
+            <div class="card">
+                <ul class="checklist">
+                    <li>네이버 블로그, 티스토리, 구글 블로거 중 사용할 계정이 있어야 합니다</li>
+                    <li>Chrome 브라우저가 설치되어 있어야 합니다</li>
+                    <li>원격 세팅을 위해 AnyDesk 등 원격 접속 도구 설치가 필요합니다</li>
+                    <li>AI API 사용료 (월 1~2만원)는 별도 부담입니다</li>
+                    <li>본 서비스는 정보성 콘텐츠 마케팅을 위한 생산성 도구입니다</li>
+                </ul>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2>지금 바로 시작하세요</h2>
+            <p>개발에 집중하는 동안, AI가 당신의 앱을 홍보합니다.</p>
+            <a href="mailto:osu355@gmail.com?subject=[AutoApp-Blogger] 서비스 문의&amp;body=안녕하세요, AutoApp-Blogger 서비스에 관심이 있습니다.%0A%0A운영 중인 앱/서비스:%0A원하는 블로그 채널:%0A기타 문의사항:" class="cta-btn">이메일로 문의하기</a>
+        </section>
+        <footer>
+            <div class="footer-links">
+                <a href="../index.html">홈으로</a>
+                <a href="mailto:osu355@gmail.com">문의하기</a>
+                <a href="../privacy-policy.html">개인정보처리방침</a>
+                <a href="../terms.html">이용약관</a>
+            </div>
+            <p class="copyright">&copy; 2025 Hundred Core Korea. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
